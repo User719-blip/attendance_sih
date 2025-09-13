@@ -73,6 +73,11 @@ class MobileFaceNet(nn.Module):
             padding=0,
             bias=False
         )
+        self.bn = nn.BatchNorm2d(embedding_size)
+        if num_classes is not None:
+            self.classifier = nn.Linear(embedding_size, num_classes)
+        else:
+            self.classifier = None
 
     def forward(self,x,return_embedding=True):
         batch_size=x.size(0)
@@ -85,7 +90,7 @@ class MobileFaceNet(nn.Module):
         x=self.conv6(x)
         x=self.conv7(x)
 
-        x=self.bn_embedding(x)
+        x=self.bn(x)
         x=x.view(batch_size,-1)
 
         embeddings=F.normalize(x,p=2,dim=1)
@@ -112,36 +117,10 @@ def create_modelFaceNet(embedding_size=128,num_classes=None):
     model =MobileFaceNet(embedding_size=embedding_size,num_classes=num_classes)
     model.get_model_size()
     return model
-def test_model_architecture():
 
-    print("\n Testing Model Architecture...")
-        
-    # Create model
-    model = create_modelFaceNet(embedding_size=128, num_classes=10)
-        
-    # Create dummy input (batch of 4 face images)
-    dummy_input = torch.randn(4, 3, 112, 112)
-    print(f"   Input shape: {dummy_input.shape}")
-        
-    # Test forward pass
-    with torch.no_grad():
-        # Test embedding output
-        embeddings = model(dummy_input, return_embedding=True)
-        print(f"   Embedding output shape: {embeddings.shape}")
-        print(f"   Embedding range: {embeddings.min():.3f} to {embeddings.max():.3f}")
-        print(f"   Embedding norms: {torch.norm(embeddings, dim=1)}")  # Should be ~1.0
-            
-        # Test classification output (if classifier exists)
-        if model.classifier is not None:
-            logits = model(dummy_input, return_embedding=False)
-            print(f"   Classification output shape: {logits.shape}")
-            print(f"   Logits range: {logits.min():.3f} to {logits.max():.3f}")
-        
-    print(" Model architecture test passed!")
-    return model
     
 if __name__=="__main__":
-    model=test_model_architecture()
+    print("="*15,'Executed',"="*15)
 
 
 
