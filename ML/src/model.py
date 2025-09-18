@@ -48,7 +48,7 @@ class DepthWiseSeperableBlock(nn.Module):
 class MobileFaceNet(nn.Module):
     def __init__(self,embedding_size=128,num_classes=None):
         super(MobileFaceNet,self).__init__()
-        self.embedding_size=embedding_size
+        self.embedding_size=embedding_size  
         self.num_classes=num_classes
 
         self.conv1=ConvBlock(

@@ -1,0 +1,37 @@
+{
+  "model_name": "MobileFaceNet",
+  "num_classes": 5,
+  "class_names": [
+    "gates",
+    "jack",
+    "modi",
+    "musk",
+    "trump"
+  ],
+  "embedding_size": 128,
+  "input_size": [
+    112,
+    112,
+    3
+  ],
+  "preprocessing": {
+    "resize": [
+      112,
+      112
+    ],
+    "normalize_mean": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "normalize_std": [
+      0.5,
+      0.5,
+      0.5
+    ]
+  },
+  "performance": {
+    "best_val_accuracy": 75.35211267605634,
+    "model_size_mb": 13.301532745361328
+  }
+}
