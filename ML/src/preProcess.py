@@ -36,14 +36,14 @@ with mp_face_detection.FaceDetection(model_selection=0,min_detection_confidence=
                     w_box=int(bboxC.width*w)
                     h_box=int(bboxC.height*h)
 
-                    margin = 0.2  
-                    x1 = max(0, x - int(w_box * margin))
-                    y1 = max(0, y - int(h_box * margin))
-                    x2 = min(w, x + w_box + int(w_box * margin))
-                    y2 = min(h, y + h_box + int(h_box * margin))
+                    # margin = 0.2  
+                    # x1 = max(0, x - int(w_box * margin))
+                    # y1 = max(0, y - int(h_box * margin))
+                    # x2 = min(w, x + w_box + int(w_box * margin))
+                    # y2 = min(h, y + h_box + int(h_box * margin))
 
                     # Crop with margin
-                    face = image[y1:y2, x1:x2]
+                    face = image[y:y+h_box, x:x+w_box]
                     if face.size == 0:
                         print(f"[WARNING] Empty face crop for {img_path}, detection {i}")
                         continue
